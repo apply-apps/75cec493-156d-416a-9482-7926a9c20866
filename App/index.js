@@ -5,7 +5,34 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, FlatList, TextInput, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { useState } from 'react';
 
+// App.js
+function App() {
+    return (
+        <SafeAreaView style={styles.appContainer}>
+            <Text style={styles.title}>Вебинар</Text>
+            <TabNavigator />
+        </SafeAreaView>
+    );
+}
+
+// TabNavigator.js
+const Tab = createBottomTabNavigator();
+
+function TabNavigator() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator>
+                <Tab.Screen name="Новости" component={NewsScreen} />
+                <Tab.Screen name="Материалы" component={MaterialsScreen} />
+                <Tab.Screen name="Обратная связь" component={ContactOrganizerScreen} />
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
+}
+
+// NewsScreen.js
 const news = [
     { id: '1', title: 'Новость 1', content: 'Содержание новости 1' },
     { id: '2', title: 'Новость 2', content: 'Содержание новости 2' },
@@ -30,14 +57,16 @@ const NewsScreen = () => {
     );
 };
 
+// MaterialsScreen.js
 const MaterialsScreen = () => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Материалы вебинара будут доступны здесь.</Text>
+        <View style={styles.materialsContainer}>
+            <Text style={styles.materialsText}>Материалы вебинара будут доступны здесь.</Text>
         </View>
     );
 };
 
+// ContactOrganizerScreen.js
 const ContactOrganizerScreen = () => {
     const [question, setQuestion] = useState('');
 
@@ -48,7 +77,7 @@ const ContactOrganizerScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.contactContainer}>
             <TextInput
                 style={styles.textInput}
                 placeholder="Введите ваш вопрос"
@@ -60,35 +89,12 @@ const ContactOrganizerScreen = () => {
     );
 };
 
-const Tab = createBottomTabNavigator();
-
-const TabNavigator = () => {
-    return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="Новости" component={NewsScreen} />
-                <Tab.Screen name="Материалы" component={MaterialsScreen} />
-                <Tab.Screen name="Обратная связь" component={ContactOrganizerScreen} />
-            </Tab.Navigator>
-        </NavigationContainer>
-    );
-};
-
-export default function App() {
-    return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Вебинар</Text>
-            <TabNavigator />
-        </SafeAreaView>
-    );
-}
-
 const styles = StyleSheet.create({
-    container: {
+    // App.js styles
+    appContainer: {
         flex: 1,
         backgroundColor: '#FFFFFF',
         marginTop: 40,
-        padding: 20,
     },
     title: {
         fontSize: 24,
@@ -96,6 +102,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: 20,
     },
+    // NewsScreen.js styles
     list: {
         padding: 20,
     },
@@ -110,9 +117,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
     },
-    text: {
+    // MaterialsScreen.js styles
+    materialsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    materialsText: {
         fontSize: 16,
         textAlign: 'center',
+    },
+    // ContactOrganizerScreen.js styles
+    contactContainer: {
+        flex: 1,
+        padding: 20,
     },
     textInput: {
         height: 40,
@@ -122,3 +141,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
 });
+
+export default App;
